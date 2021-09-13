@@ -69,13 +69,13 @@ router.post('/register', checkReqValid, checkNameUsed, async (req, res) => {
   */
 });
 
-router.post('/login', checkReqValid, (req, res) => {
+router.post('/login', checkReqValid, async (req, res) => {
 
   let {username, password} = req.body
 
   try {
 
-    const user = find({username})
+    const user = await find(username)
 
     if (user && bcrypt.compareSync(password, user.password)) {
       const token = tokenMaker(user)

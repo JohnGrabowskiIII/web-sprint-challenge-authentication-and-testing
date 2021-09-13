@@ -53,8 +53,10 @@ describe("Test Endpoints", () => {
 
   describe("Post to login endpoint", () => {
 
-    it("Post responds with correct status code", () => {
-
+    it("Post responds with correct status code", async () => {
+      let register = await request(server).post("/api/auth/register").send(testUser)
+      let response = await request(server).post("/api/auth/login").send(testUser)
+      expect(response.statusCode).toEqual(200)
     })
 
     it("Recieves token on successful login", () => {

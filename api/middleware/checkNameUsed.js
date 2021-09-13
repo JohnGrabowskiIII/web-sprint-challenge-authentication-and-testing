@@ -12,8 +12,6 @@ const checkNameUsed = async (req, res, next) => {
             res.status(401).json({message: "username taken"})
         )
 
-
-    
     } catch(err) {
         res.status(500).json({message: "server could not be reached at this time"})
     }
