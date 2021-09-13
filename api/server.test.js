@@ -38,12 +38,15 @@ describe("Test Endpoints", () => {
       expect(response.statusCode).toEqual(201)
     })
 
-    it("Posts new user to databse through register endpoint", () => {
-
+    it("Posts new user to databse through register endpoint", async () => {
+      let response = await request(server).post("/api/auth/register").send(testUser)
+      expect(response.body.username).toMatch("testUser")
     })
 
-    it("Rejects user with pre-existing name", () => {
-
+    it("Rejects user with pre-existing name", async () => {
+      let responseOne = await request(server).post("/api/auth/register").send(testUser)
+      let responseTwo = await request(server).post("/api/auth/register").send(testUser)
+      expect(responseTwo.statusCode).toEqual(401)
     })
 
   })

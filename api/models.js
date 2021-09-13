@@ -4,7 +4,7 @@ const find = (filter) => {
 
     console.log(filter)
 
-    return db('users').where(filter).first()
+    return db('users').where('username', filter).first()
 
 }
 
