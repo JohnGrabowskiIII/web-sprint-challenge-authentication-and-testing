@@ -65,8 +65,10 @@ describe("Test Endpoints", () => {
       expect(response.body.token).toBeTruthy()
     })
 
-    it("Rejects login if invalid credentials", () => {
-
+    it("Rejects login if invalid credentials", async () => {
+      let register = await request(server).post("/api/auth/register").send(testUser)
+      let response = await request(server).post("/api/auth/login").send({...testUser, password: "notthepassword"})
+      expect(response.statusCode).toEqual(401)
     })
 
   })
