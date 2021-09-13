@@ -1,7 +1,31 @@
+
+const bcrypt = require('bcryptjs')
+const jwt = require("jsonwebtoken")
+const SECRET = require("../../config/secret")
+
+const {insert} = require('../models')
+
 const router = require('express').Router();
 
-router.post('/register', (req, res) => {
-  res.end('implement register, please!');
+router.post('/register', async (req, res) => {
+
+  // NEEDS MIDDLEWARE TO CHECK IF CREDENTIALS ARE VALID AND NOT TAKEN
+
+  let userInfo = req.body
+
+  const hashRounds = process.env.BCRYPT_ROUNDS || 8
+  const hashed = bcrypt.hashSync(userInfo.password, hashRounds)
+
+  userInfo.password = hashed
+
+  try {
+    const newUser = await insert(userInfo)
+    res.status(201).json(newUser)
+  } catch(err) {
+    res.status(500).json({message: "Unable to register user at this time"})
+  }
+
+  // res.end('implement register, please!');
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
