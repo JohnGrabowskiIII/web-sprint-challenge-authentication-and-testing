@@ -24,6 +24,42 @@ test('sanity', () => {
   expect(true).toBe(true)
 })
 
+describe("Test Endpoints", () => {
+
+  describe("Post to register endpoint", () => {
+
+    it("Post responds with correct status code", () => {
+
+    })
+
+    it("Posts new user to databse through register endpoint", () => {
+
+    })
+
+    it("Rejects user with pre-existing name", () => {
+
+    })
+
+  })
+
+  describe("Post to login endpoint", () => {
+
+    it("Post responds with correct status code", () => {
+
+    })
+
+    it("Recieves token on successful login", () => {
+
+    })
+
+    it("Rejects login if invalid credentials", () => {
+      
+    })
+
+  })
+
+})
+
 // DESCRIBE
 //    DESCRIBE
 //    POST TO REGISTER ENDPOINT
