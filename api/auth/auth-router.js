@@ -7,6 +7,22 @@ const {insert} = require('../models')
 
 const router = require('express').Router();
 
+const tokenMaker = user => {
+
+  const payload = {
+    subject: user.id,
+    username: user.username,
+    role: user.role
+  }
+
+  const options = {
+    expiresIn: "5m"
+  }
+
+  return jwt.sign(payload, SECRET, options)
+
+}
+
 router.post('/register', async (req, res) => {
 
   // NEEDS MIDDLEWARE TO CHECK IF CREDENTIALS ARE VALID AND NOT TAKEN
@@ -54,7 +70,13 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-  res.end('implement login, please!');
+
+  let {username, password} = req.body
+
+  // WILL NEED TO CHECK IF USER EXISTS
+  // WILL NEED MODEL AND USERNAME
+
+  // res.end('implement login, please!');
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
