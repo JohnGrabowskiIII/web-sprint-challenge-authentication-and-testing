@@ -4,6 +4,11 @@ const db = require("../data/dbConfig.js")
 const request = require("supertest")
 const server = require("./server")
 
+const testUser = {
+  username: "testUser",
+  password: "testPassword"
+}
+
 // MIGRATE DOWN AND THEN UP
 beforeAll(async ()=>{
   await db.migrate.rollback()
@@ -28,8 +33,9 @@ describe("Test Endpoints", () => {
 
   describe("Post to register endpoint", () => {
 
-    it("Post responds with correct status code", () => {
-
+    it("Post responds with correct status code", async () => {
+      let response = await request(server).post("/api/auth/register").send(testUser)
+      expect(response.statusCode).toEqual(201)
     })
 
     it("Posts new user to databse through register endpoint", () => {
@@ -53,7 +59,7 @@ describe("Test Endpoints", () => {
     })
 
     it("Rejects login if invalid credentials", () => {
-      
+
     })
 
   })

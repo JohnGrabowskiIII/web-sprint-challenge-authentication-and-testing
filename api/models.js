@@ -2,6 +2,8 @@ const db = require('../data/dbConfig')
 
 const find = (filter) => {
 
+    console.log(filter)
+
     return db('users').where(filter).first()
 
 }

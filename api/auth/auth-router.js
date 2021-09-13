@@ -3,8 +3,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require("jsonwebtoken")
 const SECRET = require("../../config/secret")
 
-const {checkReqValid} = require("../middleware/checkReqValid")
-const {checkNameUsed} = require('../middleware/checkNameUsed')
+const checkReqValid = require("../middleware/checkReqValid")
+const checkNameUsed = require('../middleware/checkNameUsed')
 const {find, insert} = require('../models')
 
 const router = require('express').Router();

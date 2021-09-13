@@ -1,7 +1,7 @@
 
 const checkReqValid = (req, res, next) => {
 
-    const valid = req.username && req.password
+    const valid = Boolean(req.body.username && req.body.password)
 
     if (valid) {
         next()
@@ -10,3 +10,5 @@ const checkReqValid = (req, res, next) => {
     }
 
 }
+
+module.exports = checkReqValid
