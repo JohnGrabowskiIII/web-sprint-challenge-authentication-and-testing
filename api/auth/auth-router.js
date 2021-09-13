@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require("jsonwebtoken")
 const SECRET = require("../../config/secret")
 
+const checkReqValid = require("../middleware/checkReqValid")
 const {checkNameUsed} = require('../middleware/checkNameUsed')
 const {insert} = require('../models')
 
@@ -24,7 +25,7 @@ const tokenMaker = user => {
 
 }
 
-router.post('/register', checkNameUsed, async (req, res) => {
+router.post('/register', checkReqValid, checkNameUsed, async (req, res) => {
 
   // NEEDS MIDDLEWARE TO CHECK IF CREDENTIALS ARE VALID AND NOT TAKEN
 
@@ -70,7 +71,7 @@ router.post('/register', checkNameUsed, async (req, res) => {
   */
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', checkReqValid, (req, res) => {
 
   let {username, password} = req.body
 
