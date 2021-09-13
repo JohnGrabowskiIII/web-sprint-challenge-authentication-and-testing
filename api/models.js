@@ -1,5 +1,11 @@
 const db = require('../data/dbConfig')
 
+const find = (filter) => {
+
+    return db('users').where(filter).first()
+
+}
+
 const insert = async (info) => {
 
     const [id] = await db('users').insert(info)
@@ -8,5 +14,6 @@ const insert = async (info) => {
 }
 
 module.exports = {
+    find,
     insert
 }
