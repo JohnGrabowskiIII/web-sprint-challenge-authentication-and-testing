@@ -73,6 +73,22 @@ describe("Test Endpoints", () => {
 
   })
 
+  describe("Jokes endpoint responds correctly", () => {
+
+    it("Get is rejected if no token", async () => {
+      let response = await request(server).get("/api/jokes")
+      expect(response.statusCode).toEqual(401)
+    })
+
+    it("Get is accepted with token", async () => {
+      let register = await request(server).post("/api/auth/register").send(testUser)
+      let login = await request(server).post("/api/auth/login").send(testUser)
+      let response = await request(server).get("/api/jokes").set("Authorization", login.body.token)
+      expect(response.statusCode).toEqual(200)
+    })
+
+  })
+
 })
 
 // DESCRIBE
