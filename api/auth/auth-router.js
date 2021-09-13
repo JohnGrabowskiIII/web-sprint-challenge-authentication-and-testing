@@ -3,9 +3,9 @@ const bcrypt = require('bcryptjs')
 const jwt = require("jsonwebtoken")
 const SECRET = require("../../config/secret")
 
-const checkReqValid = require("../middleware/checkReqValid")
+const {checkReqValid} = require("../middleware/checkReqValid")
 const {checkNameUsed} = require('../middleware/checkNameUsed')
-const {insert} = require('../models')
+const {find, insert} = require('../models')
 
 const router = require('express').Router();
 
@@ -26,8 +26,6 @@ const tokenMaker = user => {
 }
 
 router.post('/register', checkReqValid, checkNameUsed, async (req, res) => {
-
-  // NEEDS MIDDLEWARE TO CHECK IF CREDENTIALS ARE VALID AND NOT TAKEN
 
   let userInfo = req.body
 
@@ -75,8 +73,22 @@ router.post('/login', checkReqValid, (req, res) => {
 
   let {username, password} = req.body
 
-  // WILL NEED TO CHECK IF USER EXISTS
-  // WILL NEED MODEL AND USERNAME
+  try {
+
+    const user = find({username})
+
+    if (user && bcrypt.compareSync(password, user.password)) {
+      const token = tokenMaker(user)
+      res.status(200).json({
+        message: `welcome, ${user.username}`
+      })
+    } else {
+      res.status(401).json({message: "invalid credentials"})
+    }
+  
+  } catch(err) {
+    res.status(500).json({message: "Unable to login at this time"})
+  }
 
   // res.end('implement login, please!');
   /*
